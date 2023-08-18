@@ -1,13 +1,17 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
 from rest_framework import routers
 
-from views import ImageViewset
+from wallpaper.views import ImageViewset
+from wallpaper.views import test_view
 
-router = routers.DefaultRouter()
-router.register(r"images", viewset=ImageViewset)
+#router = routers.DefaultRouter()
+#router.register(r"test", test_view)
 
 urlpatterns = [
+    path("", test_view),
     path("controll", admin.site.urls),
-    path("", include(router.urls))
-]
+    #path("", include(router.urls)),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
