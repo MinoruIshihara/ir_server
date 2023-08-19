@@ -2,3 +2,4 @@
 db/data/*
 db/init/:
 **/__pycache__/**
+wallpaper_api/images/**
