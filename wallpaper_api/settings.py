@@ -20,11 +20,13 @@ ROOT_URLCONF = "urls"
 POSTGRES_USER = db_env("POSTGRES_USER")
 POSTGRES_PASSWORD = db_env("POSTGRES_PASSWORD")
 
-MEDIA_URL = "/media/"
+MEDIA_URL = "/images/"
 if DEBUG:
-    MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
+    print("BASE_DIR: ", f"{BASE_DIR}/images")
+    MEDIA_ROOT = f"{BASE_DIR}/images"
 else:
     MEDIA_ROOT = f"/var/www/{BASE_DIR.name}/media"
+
     
 INSTALLED_APPS = [
     "wallpaper",
@@ -35,7 +37,7 @@ INSTALLED_APPS = [
     #"django.urls",
     #"django.conf.settings",
     #"django.db",
-    #"rest_framework",
+    "rest_framework",
 ]
 
 TEMPLATES = [

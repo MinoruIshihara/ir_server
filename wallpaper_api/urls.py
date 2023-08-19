@@ -7,11 +7,11 @@ from rest_framework import routers
 from wallpaper.views import ImageViewset
 from wallpaper.views import test_view
 
-#router = routers.DefaultRouter()
-#router.register(r"test", test_view)
+router = routers.DefaultRouter()
+router.register(r"image", ImageViewset, basename="image")
 
 urlpatterns = [
-    path("", test_view),
+    path("", include(router.urls)),
+    path("test", test_view),
     path("controll", admin.site.urls),
-    #path("", include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
