@@ -1,29 +1,23 @@
 import environ
 import os
 
-BASE_DIR = environ.Path(__file__) - 1
-ROOT_DIR = environ.Path(__file__) - 2
-
+BASE_DIR = environ.Path(__file__) - 2
+ROOT_DIR = environ.Path(__file__) - 3
 
 api_env = environ.Env()
-api_env_file = str(BASE_DIR.path(".env"))
+api_env_file = str(BASE_DIR.path("config/.env"))
 api_env.read_env(api_env_file)
 
 DEBUG = api_env("DEBUG", bool)
 
 SECRET_KEY = api_env("SECRET_KEY")
-ROOT_URLCONF = "urls"
+ROOT_URLCONF = "config.urls"
 
 MEDIA_URL = api_env("MEDIA_URL")
 MEDIA_ROOT = api_env("MEDIA_ROOT")
 
-
-db_env = environ.Env()
-db_env_file  = str(ROOT_DIR.path("./db/.env"))
-db_env.read_env(db_env_file)
-
-POSTGRES_USER = db_env("POSTGRES_USER")
-POSTGRES_PASSWORD = db_env("POSTGRES_PASSWORD")
+POSTGRES_USER = api_env("POSTGRES_USER")
+POSTGRES_PASSWORD = api_env("POSTGRES_PASSWORD")
 
 
 INSTALLED_APPS = [
@@ -68,7 +62,7 @@ DATABASES = {
         "NAME": "wallpaper",
         "USER": POSTGRES_USER,
         "PASSWORD": POSTGRES_PASSWORD,
-        "HOST": "127.0.0.1",
+        "HOST": "postgres-host",
         "PORT": "5432",
     }
 }
