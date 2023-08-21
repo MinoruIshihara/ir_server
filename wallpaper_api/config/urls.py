@@ -14,4 +14,5 @@ urlpatterns = [
     path("", include(router.urls)),
     path("test", test_view),
     path("controll", admin.site.urls),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
