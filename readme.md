@@ -1,5 +1,9 @@
-#起動方法
+# 構築
+* .envを用意
+* docker-compose run api python manage.py collectstatic
 
-#フォルダ構成
+# 起動方法
 
-#エンドポイント
+# フォルダ構成
+
+# エンドポイント
