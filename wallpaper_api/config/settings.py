@@ -1,5 +1,4 @@
 import environ
-import os
 
 BASE_DIR = environ.Path(__file__) - 2
 ROOT_DIR = environ.Path(__file__) - 3
@@ -11,14 +10,19 @@ api_env.read_env(api_env_file)
 DEBUG = api_env("DEBUG", bool)
 
 SECRET_KEY = api_env("SECRET_KEY")
-ROOT_URLCONF = "config.urls"
-
-MEDIA_URL = api_env("MEDIA_URL")
-MEDIA_ROOT = api_env("MEDIA_ROOT")
 
 POSTGRES_USER = api_env("POSTGRES_USER")
 POSTGRES_PASSWORD = api_env("POSTGRES_PASSWORD")
 
+ROOT_URLCONF = "config.urls"
+
+MEDIA_URL="/imagefiles/"
+MEDIA_ROOT = f"/var/www/wallpaper_api/images"
+
+STATIC_ROOT = "static"
+STATIC_URL = "/static/"
+
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 INSTALLED_APPS = [
     "wallpaper",
@@ -26,10 +30,8 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "django.contrib.messages",
-    #"django.urls",
-    #"django.conf.settings",
-    #"django.db",
     "rest_framework",
+    "django.contrib.staticfiles",
 ]
 
 TEMPLATES = [

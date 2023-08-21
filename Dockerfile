@@ -1,9 +1,6 @@
 FROM python:3.10
 
-COPY ./wallpaper_api /usr/src/app:delegated
+COPY ./requirements.txt /usr/local/etc
 
-WORKDIR /usr/src/app:delegated/config
+WORKDIR /usr/local/etc
 RUN pip install -r requirements.txt
-
-WORKDIR /usr/src/app:delegated
-CMD gunicorn "--config" "gunicorn_settings.py"
