@@ -1,18 +1,17 @@
 import environ
 import os
 
-BASE_DIR = environ.Path(__file__) - 1
-ROOT_DIR = environ.Path(__file__) - 2
-
+BASE_DIR = environ.Path(__file__) - 2
+ROOT_DIR = environ.Path(__file__) - 3
 
 api_env = environ.Env()
-api_env_file = str(BASE_DIR.path(".env"))
+api_env_file = str(BASE_DIR.path("config/.env"))
 api_env.read_env(api_env_file)
 
 DEBUG = api_env("DEBUG", bool)
 
 SECRET_KEY = api_env("SECRET_KEY")
-ROOT_URLCONF = "urls"
+ROOT_URLCONF = "config.urls"
 
 MEDIA_URL = api_env("MEDIA_URL")
 MEDIA_ROOT = api_env("MEDIA_ROOT")
