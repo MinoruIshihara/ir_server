@@ -23,5 +23,6 @@ services:
       - 8080:8000
     volumes:
       - ./wallpaper_api/:/usr/src/app/wallpaper_api/
+      - ./images/:/var/www/wallpaper_api/images/
     working_dir: /usr/src/app/wallpaper_api
     command: ["gunicorn", "--config", "gunicorn_settings.py"]
