@@ -22,7 +22,10 @@ MEDIA_ROOT = f"/var/www/wallpaper_api/images"
 STATIC_ROOT = "static"
 STATIC_URL = "/static/"
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = ["127.0.0.1"]
 
 INSTALLED_APPS = [
     "wallpaper",
@@ -32,6 +35,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "rest_framework",
     "django.contrib.staticfiles",
+    "rest_framework_nested",
 ]
 
 TEMPLATES = [
