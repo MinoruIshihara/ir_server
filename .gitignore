@@ -6,3 +6,4 @@ wallpaper_api/images/**
 .vscode
 wallpaper_api/static
 **/access.log
+images/
