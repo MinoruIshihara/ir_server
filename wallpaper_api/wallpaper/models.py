@@ -72,6 +72,8 @@ class User(AbstractBaseUser):
 
     is_supervisor = models.BooleanField(default=False)
 
+    is_staff = models.BooleanField(default=False)
+
     is_active = models.BooleanField(default=True)
 
     objects = UserManager()
