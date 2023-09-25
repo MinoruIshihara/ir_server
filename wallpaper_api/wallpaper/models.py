@@ -81,6 +81,12 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email"]
 
+    def has_module_perms(self, wallpaper):
+        return True
+
+    def has_perm(self, perm, obj=None):
+        return True
+
     def __str__(self):
         return f"name: {self.username}, email: {self.email}, supervisor: {self.is_supervisor}, active: {self.is_active}"
 
