@@ -29,8 +29,13 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = ["127.0.0.1"]
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = api_env("TRUSTED_ORIGINS").split(" ")
+CORS_PREFLIGHT_MAX_AGE = 60 * 30
+
 INSTALLED_APPS = [
     "wallpaper",
+    "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -59,6 +64,7 @@ TEMPLATES = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
