@@ -2,7 +2,7 @@ version: '3'
 services:
   postgres:
     image: postgres:14.9
-    container_name: postgres
+    container_name: ir-server-postgres
     env_file:
       - ./db/.env
     hostname: postgres-host
@@ -17,6 +17,7 @@ services:
     pull_policy: "always"
     depends_on:
      - postgres
+    container_name: ir-server-api
     env_file:
       - ./ir_server_api/.env
     ports:
