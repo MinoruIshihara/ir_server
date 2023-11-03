@@ -14,7 +14,7 @@ from config import settings
 
 
 def upload_to(instance, filename):
-    return "wallpaper/{filename}".format(filename=filename)
+    return "ir_server/{filename}".format(filename=filename)
 
 
 class Image(models.Model):
@@ -81,7 +81,7 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email"]
 
-    def has_module_perms(self, wallpaper):
+    def has_module_perms(self, ir_server):
         return True
 
     def has_perm(self, perm, obj=None):
@@ -91,4 +91,4 @@ class User(AbstractBaseUser):
         return f"name: {self.username}, email: {self.email}, supervisor: {self.is_supervisor}, active: {self.is_active}"
 
     class Meta:
-        db_table = "wallpaper_user"
+        db_table = "ir_server_user"

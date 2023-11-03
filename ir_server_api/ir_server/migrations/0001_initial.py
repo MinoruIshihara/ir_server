@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 import uuid
-import wallpaper.models
+import ir_server.models
 
 
 class Migration(migrations.Migration):
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('name', models.TextField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('file', models.ImageField(blank=True, null=True, upload_to=wallpaper.models.upload_to)),
+                ('file', models.ImageField(blank=True, null=True, upload_to=ir_server.models.upload_to)),
             ],
         ),
     ]

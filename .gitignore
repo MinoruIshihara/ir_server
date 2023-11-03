@@ -1,8 +1,8 @@
 *.env
 db/data/*
 **/__pycache__/**
-wallpaper_api/images/**
+ir_server_api/images/**
 .vscode
-wallpaper_api/static
+ir_server_api/static
 **/access.log
 images/

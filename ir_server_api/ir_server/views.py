@@ -15,8 +15,8 @@ from rest_framework.generics import get_object_or_404
 
 from config.settings import MEDIA_ROOT
 
-from wallpaper.models import Image
-from wallpaper.serializers import ImageSerializer
+from ir_server.models import Image
+from ir_server.serializers import ImageSerializer
 
 
 def test_view(request):
@@ -55,7 +55,7 @@ class ImageDownloadVIew(GenericViewSet, ListModelMixin):
         iamge_path = get_object_or_404(self.queryset, pk=image_pk)
         selializer = self.get_serializer(iamge_path)
         _, file_name = os.path.split(selializer.data["file"])
-        image_path = os.path.join(MEDIA_ROOT, "wallpaper", file_name)
+        image_path = os.path.join(MEDIA_ROOT, "ir_server", file_name)
         image_name = selializer.data["name"]
 
         return FileResponse(

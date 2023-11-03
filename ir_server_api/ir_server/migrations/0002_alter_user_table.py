@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wallpaper', '0001_initial'),
+        ('ir_server', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterModelTable(
             name='user',
-            table='wallpaper_user',
+            table='ir_server_user',
         ),
     ]

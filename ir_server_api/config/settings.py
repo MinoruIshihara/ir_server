@@ -14,12 +14,12 @@ SECRET_KEY = api_env("SECRET_KEY")
 POSTGRES_USER = api_env("POSTGRES_USER")
 POSTGRES_PASSWORD = api_env("POSTGRES_PASSWORD")
 
-AUTH_USER_MODEL = "wallpaper.User"
+AUTH_USER_MODEL = "ir_server.User"
 
 ROOT_URLCONF = "config.urls"
 
 MEDIA_URL = "/imagefiles/"
-MEDIA_ROOT = f"/var/www/wallpaper_api/images"
+MEDIA_ROOT = f"/var/www/ir_server_api/images"
 
 STATIC_ROOT = "static"
 STATIC_URL = "/static/"
@@ -34,7 +34,7 @@ CORS_ALLOWED_ORIGINS = api_env("TRUSTED_ORIGINS").split(" ")
 CORS_PREFLIGHT_MAX_AGE = 60 * 30
 
 INSTALLED_APPS = [
-    "wallpaper",
+    "ir_server",
     "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -75,7 +75,7 @@ MIDDLEWARE = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "wallpaper",
+        "NAME": "ir_server",
         "USER": POSTGRES_USER,
         "PASSWORD": POSTGRES_PASSWORD,
         "HOST": "postgres-host",

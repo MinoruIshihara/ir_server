@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework_nested import routers
 
-from wallpaper.views import ImageViewset, ImageDownloadVIew
+from ir_server.views import ImageViewset, ImageDownloadVIew
 
 router = routers.SimpleRouter()
 router.register(r"image", ImageViewset, basename="image")

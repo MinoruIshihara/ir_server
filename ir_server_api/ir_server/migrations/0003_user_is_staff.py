@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wallpaper', '0002_alter_user_table'),
+        ('ir_server', '0002_alter_user_table'),
     ]
 
     operations = [
