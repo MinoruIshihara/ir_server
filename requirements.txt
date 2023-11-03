@@ -5,3 +5,5 @@ drf-spectacular==0.26.4
 gunicorn==21.2.0
 Pillow==9.3.0
 psycopg2==2.9.7
+drf-nested-routers==0.93.4
+django-cors-headers==4.2.0

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from wallpaper.models import Image
+from ir_server.models import Image
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:

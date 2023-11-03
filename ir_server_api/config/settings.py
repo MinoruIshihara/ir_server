@@ -14,43 +14,57 @@ SECRET_KEY = api_env("SECRET_KEY")
 POSTGRES_USER = api_env("POSTGRES_USER")
 POSTGRES_PASSWORD = api_env("POSTGRES_PASSWORD")
 
+AUTH_USER_MODEL = "ir_server.User"
+
 ROOT_URLCONF = "config.urls"
 
-MEDIA_URL="/imagefiles/"
-MEDIA_ROOT = f"/var/www/wallpaper_api/images"
+MEDIA_URL = "/imagefiles/"
+MEDIA_ROOT = f"/var/www/ir_server_api/images"
 
 STATIC_ROOT = "static"
 STATIC_URL = "/static/"
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = ["127.0.0.1"]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = api_env("TRUSTED_ORIGINS").split(" ")
+CORS_PREFLIGHT_MAX_AGE = 60 * 30
 
 INSTALLED_APPS = [
-    "wallpaper",
+    "ir_server",
+    "corsheaders",
     "django.contrib.admin",
-    "django.contrib.contenttypes",
     "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
     "django.contrib.messages",
-    "rest_framework",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "rest_framework_nested",
 ]
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -61,7 +75,7 @@ MIDDLEWARE = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "wallpaper",
+        "NAME": "ir_server",
         "USER": POSTGRES_USER,
         "PASSWORD": POSTGRES_PASSWORD,
         "HOST": "postgres-host",

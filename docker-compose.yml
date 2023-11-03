@@ -2,7 +2,7 @@ version: '3'
 services:
   postgres:
     image: postgres:14.9
-    container_name: postgres
+    container_name: ir-server-postgres
     env_file:
       - ./db/.env
     hostname: postgres-host
@@ -17,11 +17,13 @@ services:
     pull_policy: "always"
     depends_on:
      - postgres
+    container_name: ir-server-api
     env_file:
-      - ./wallpaper_api/.env
+      - ./ir_server_api/.env
     ports:
       - 8080:8000
     volumes:
-      - ./wallpaper_api/:/usr/src/app/wallpaper_api/
-    working_dir: /usr/src/app/wallpaper_api
+      - ./ir_server_api/:/usr/src/app/ir_server_api/
+      - ./images/:/var/www/ir_server_api/images/
+    working_dir: /usr/src/app/ir_server_api
     command: ["gunicorn", "--config", "gunicorn_settings.py"]
