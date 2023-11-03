@@ -36,7 +36,6 @@ CORS_PREFLIGHT_MAX_AGE = 60 * 30
 INSTALLED_APPS = [
     "ir_server",
     "corsheaders",
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
