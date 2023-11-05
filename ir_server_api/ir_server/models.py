@@ -24,12 +24,6 @@ class Image(models.Model):
     file = models.ImageField(upload_to=upload_to, null=True, blank=True)
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created and instance is not None:
-        Token.objects.create(user=instance)
-
-
 class UserManager(BaseUserManager):
     def _valid_email(self, email):
         if not email:
