@@ -14,6 +14,18 @@ SECRET_KEY = api_env("SECRET_KEY")
 POSTGRES_USER = api_env("POSTGRES_USER")
 POSTGRES_PASSWORD = api_env("POSTGRES_PASSWORD")
 
+EXPIRED_DAYS = int(api_env("EXPIRED_DAYS"))
+HOST_NAME = api_env("HOST_NAME")
+EMAIL_SENDER = api_env("EMAIL_SENDER")
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = api_env("EMAIL_HOST")
+EMAIL_HOST_USER = api_env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = api_env("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = api_env("EMAIL_PORT")
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = api_env("DEFAULT_FROM_EMAIL")
+
 AUTH_USER_MODEL = "ir_server.User"
 
 ROOT_URLCONF = "config.urls"
@@ -36,7 +48,6 @@ CORS_PREFLIGHT_MAX_AGE = 60 * 30
 INSTALLED_APPS = [
     "ir_server",
     "corsheaders",
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",

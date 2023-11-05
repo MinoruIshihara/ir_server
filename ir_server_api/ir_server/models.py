@@ -1,16 +1,16 @@
-from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.contrib.auth.models import (
-    BaseUserManager,
-    AbstractBaseUser,
-    PermissionsMixin,
-)
-from rest_framework.authtoken.models import Token
-
+import datetime
 import uuid
 
 from config import settings
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 
 
 def upload_to(instance, filename):
@@ -24,14 +24,17 @@ class Image(models.Model):
     file = models.ImageField(upload_to=upload_to, null=True, blank=True)
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created and instance is not None:
-        Token.objects.create(user=instance)
-
-
 class UserManager(BaseUserManager):
+    def _valid_email(self, email):
+        if not email:
+            raise ValueError("Email should not be empty")
+
+    def _valid_username(self, username):
+        if not username:
+            raise ValueError("UserName should not be empty")
+
     def _create_user(self, email, username, password, **extra_dields):
+        self._valid_email(email)
         email = self.normalize_email(email)
         user = self.model(email=email, username=username, **extra_dields)
         user.set_password(password)
@@ -66,16 +69,12 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     username = models.CharField(unique=True, max_length=100)
-
     email = models.EmailField(unique=True)
-
     is_supervisor = models.BooleanField(default=False)
-
     is_staff = models.BooleanField(default=False)
-
     is_active = models.BooleanField(default=True)
-
     objects = UserManager()
 
     USERNAME_FIELD = "username"
@@ -91,4 +90,21 @@ class User(AbstractBaseUser):
         return f"name: {self.username}, email: {self.email}, supervisor: {self.is_supervisor}, active: {self.is_active}"
 
     class Meta:
-        db_table = "ir_server_user"
+        db_table = "users"
+
+
+class UserActivationTokenManager(models.Manager):
+    def activate_user(self, token):
+        activation_token = self.filter(token=token, expired_at__gte=datetime.now())
+        activation_user = activation_token.user
+        activation_user.is_active = True
+        activation_user.save()
+        return activation_user
+
+
+class UserActivationToken(models.Model):
+    token = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    expired_at = models.DateTimeField()
+
+    objects = UserActivationTokenManager()
