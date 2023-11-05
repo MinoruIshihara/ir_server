@@ -1,3 +1,3 @@
-CREATE DATABASE wallpaper;
-GRANT ALL PRIVILEGES ON DATABASE wallpaper TO postgres;
+CREATE DATABASE ir_server;
+GRANT ALL PRIVILEGES ON DATABASE ir_server TO postgres;
 \c postgres
