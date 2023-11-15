@@ -1,13 +1,19 @@
 import logging
 from typing import Any, Dict
 
-from ir_server.models import Image, User, UserActivationToken
+from ir_server.models import Image, Stat, User, UserActivationToken
 from rest_framework import serializers
 
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
+        fields = ["id", "name", "created_at", "file"]
+
+
+class StatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stat
         fields = ["id", "name", "created_at", "file"]
 
 

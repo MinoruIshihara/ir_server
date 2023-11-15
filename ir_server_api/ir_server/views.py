@@ -5,9 +5,10 @@ from datetime import datetime, timedelta
 from config.settings import EMAIL_SENDER, EXPIRED_DAYS, HOST_NAME, MEDIA_ROOT
 from django.core.mail import send_mail
 from django.http import FileResponse, HttpResponse
-from ir_server.models import Image, User, UserActivationToken
+from ir_server.models import Image, Stat, User, UserActivationToken
 from ir_server.serializers import (
     ImageSerializer,
+    StatSerializer,
     UserActivationTokenSerializer,
     UserSerializer,
 )
@@ -50,6 +51,22 @@ class ImageViewset(ModelViewSet):
 class ImageDownloadView(GenericViewSet, ListModelMixin):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
+
+    def list(self, request, image_pk=None):
+        iamge_path = get_object_or_404(self.queryset, pk=image_pk)
+        selializer = self.get_serializer(iamge_path)
+        _, file_name = os.path.split(selializer.data["file"])
+        image_path = os.path.join(MEDIA_ROOT, "ir_server", file_name)
+        image_name = selializer.data["name"]
+
+        return FileResponse(
+            open(image_path, "rb"), as_attachment=True, filename=image_name
+        )
+
+
+class StatView(GenericViewSet, ListModelMixin):
+    queryset = Stat.objects.all()
+    serializer_class = StatSerializer
 
     def list(self, request, image_pk=None):
         iamge_path = get_object_or_404(self.queryset, pk=image_pk)
