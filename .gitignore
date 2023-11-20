@@ -1,0 +1,8 @@
+*.env
+db/data/*
+**/__pycache__/**
+ir_server_api/images/**
+.vscode
+ir_server_api/static
+**/access.log
+images/**
