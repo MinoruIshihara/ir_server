@@ -5,17 +5,16 @@ from datetime import datetime, timedelta
 from config.settings import EMAIL_SENDER, EXPIRED_DAYS, HOST_NAME, MEDIA_ROOT
 from django.core.mail import send_mail
 from django.http import FileResponse, HttpResponse
-from ir_server.models import Image, User, UserActivationToken
-from ir_server.serializers import (
-    ImageSerializer,
-    UserActivationTokenSerializer,
-    UserSerializer,
-)
+from ir_server.models import Image, Stat, User, UserActivationToken
+from ir_server.serializers import (ImageSerializer, StatSerializer,
+                                   UserActivationTokenSerializer,
+                                   UserSerializer)
 from rest_framework import permissions
 from rest_framework.generics import get_object_or_404
 from rest_framework.mixins import CreateModelMixin, ListModelMixin
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND
+from rest_framework.status import (HTTP_200_OK, HTTP_201_CREATED,
+                                   HTTP_404_NOT_FOUND)
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 
@@ -56,6 +55,46 @@ class ImageDownloadView(GenericViewSet, ListModelMixin):
         selializer = self.get_serializer(iamge_path)
         _, file_name = os.path.split(selializer.data["file"])
         image_path = os.path.join(MEDIA_ROOT, "ir_server", file_name)
+        image_name = selializer.data["name"]
+
+        return FileResponse(
+            open(image_path, "rb"), as_attachment=True, filename=image_name
+        )
+
+
+class StatViewset(ModelViewSet):
+    queryset = Stat.objects.all()
+    serializer_class = StatSerializer
+
+    def create(self, request):
+        file_data = request.data
+
+        serializer = self.get_serializer(data=file_data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
+
+    def retrieve(self, request, pk=None):
+        if pk == "latest":
+            objs = self.get_queryset().all()
+            latest_id = objs.latest("created_at").id
+            latest_obj = get_object_or_404(objs, pk=latest_id)
+            serializer = self.get_serializer(latest_obj)
+            return Response(data=serializer.data)
+        else:
+            return super().retrieve(self, request, pk)
+
+
+class StatDownloadView(GenericViewSet, ListModelMixin):
+    queryset = Stat.objects.all()
+    serializer_class = StatSerializer
+
+    def list(self, request, stat_pk=None):
+        iamge_path = get_object_or_404(self.queryset, pk=stat_pk)
+        selializer = self.get_serializer(iamge_path)
+        _, file_name = os.path.split(selializer.data["file"])
+        image_path = os.path.join(MEDIA_ROOT, "ir_server/stat", file_name)
         image_name = selializer.data["name"]
 
         return FileResponse(

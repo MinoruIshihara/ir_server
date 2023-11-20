@@ -5,4 +5,4 @@ ir_server_api/images/**
 .vscode
 ir_server_api/static
 **/access.log
-images/
+images/**
