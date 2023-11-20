@@ -1,1 +1,0 @@
-default_app_config = "ir_server.apps.ir_serverConfig"
